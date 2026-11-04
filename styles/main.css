@@ -68,12 +68,20 @@ ul {
 
 a {
   color: var(--ink);
-  text-decoration: none;
-  transition: color 0.2s;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-thickness 0.15s;
 }
 
 a:visited {
   color: var(--ink);
+}
+
+.card-thumb,
+.icon-button,
+.skip {
+  text-decoration: none;
 }
 
 .card a {
@@ -81,8 +89,9 @@ a:visited {
 }
 
 .link,
-.link:visited {
-  color: var(--link);
+.link:visited,
+.link:hover {
+  color: var(--ink);
 }
 
 button {
@@ -118,8 +127,9 @@ button {
   left: 8%;
   z-index: 3;
   padding: 6px 10px;
-  border: 1px solid var(--ink);
-  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background: var(--surface);
   transform: translateY(-150%);
 }
 
@@ -147,9 +157,10 @@ button {
 }
 
 .tagline {
-  margin-top: 6px;
+  margin-top: var(--space-2);
   font-size: 11px;
   letter-spacing: 0.01em;
+  color: var(--text-secondary);
 }
 
 .nav {
@@ -203,8 +214,8 @@ button {
   justify-content: center;
   width: 96px;
   height: 96px;
-  border: 1px solid var(--ink);
-  border-radius: 0;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
   background: var(--white);
   color: var(--ink);
   font-size: 12px;
@@ -231,7 +242,8 @@ a.contact:hover {
   display: inline-block;
   margin: 0 3px 6px 0;
   padding: 2px 5px;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
   background: transparent;
   color: var(--ink);
   font-size: 12px;
@@ -283,8 +295,9 @@ a.contact:hover {
   display: block;
   aspect-ratio: 8 / 7;
   overflow: hidden;
-  border: 1px solid var(--ink);
-  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background: var(--surface);
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
@@ -350,12 +363,14 @@ a.contact:hover {
   justify-content: space-between;
   gap: 6px 10px;
   margin-top: 2px;
+  color: var(--text-secondary);
   font-size: 12px;
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
 }
 
 .card-foot .link {
+  color: var(--ink);
   font-size: 12px;
   letter-spacing: 0;
 }
@@ -366,7 +381,7 @@ a.contact:hover {
 
 .site-footer {
   padding: 34px 0 76px;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--border-color);
   font-size: 13px;
   letter-spacing: 0;
   text-align: left;
@@ -418,6 +433,7 @@ a.contact:hover {
 
 .colophon {
   margin-top: 30px;
+  color: var(--text-secondary);
   font-size: 12px;
   letter-spacing: 0;
 }
@@ -435,11 +451,14 @@ a.contact:hover {
 
 @media (hover: hover) and (pointer: fine) {
   a:hover {
-    color: var(--ink-soft);
+    color: var(--ink);
+    text-decoration-thickness: 2px;
   }
 
-  .link:hover {
-    color: var(--link-hover);
+  .card-thumb:hover,
+  .icon-button:hover,
+  .skip:hover {
+    text-decoration: none;
   }
 
   button.tag:hover {
