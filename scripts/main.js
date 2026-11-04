@@ -200,70 +200,52 @@
     }).filter(Boolean);
   }
 
-  function renderCard(project, used) {
+  function renderRow(project, index) {
     if (!project || typeof project !== "object") return "";
     var title = text(project.title);
     if (!title) return "";
-    var id = uniqueId(slug(project.id || title), used);
-    var href = safeUrl(project.href || ("#project-" + id));
-    if (href === "#") href = "#project-" + id;
+    var href = safeUrl(project.href || "#");
     var outbound = /^https?:\/\//i.test(href) ? " target=\"_blank\" rel=\"noopener\"" : "";
     var src = thumbSrc(project, title);
-    var alt = text(project.alt) || ("Cover image for " + title);
     var dated = dateParts(project.year || project.date);
-    var credit = text(project.credit);
-    var creditHref = safeUrl(project.creditHref || "#about");
     var tags = tagList(project);
     var time = dated.label
       ? "<time" + (dated.iso ? " datetime=\"" + esc(dated.iso) + "\"" : "") + ">" + esc(dated.label) + "</time>"
       : "";
-    var creditOutbound = /^https?:\/\//i.test(creditHref) ? " target=\"_blank\" rel=\"noopener\"" : "";
-    var creditHtml = credit
-      ? "<a class=\"link credit\" href=\"" + esc(creditHref) + "\"" + creditOutbound + ">" + esc(credit) + "</a>"
-      : "";
-    var filters = filterTagSet();
-    var tagsHtml = tags.map(function (tag) {
-      if (!filters[tag]) {
-        return "<li><span class=\"tag\">" + esc(tag) + "</span></li>";
-      }
-      return "<li><button type=\"button\" class=\"tag\" data-filter=\"" + esc(tag) + "\" aria-pressed=\"false\">" + esc(tag) + "</button></li>";
-    }).join("");
-
+    var number = String(index + 1).padStart(2, "0");
+    var stack = tags.join(" · ");
     return (
-      "<li class=\"card\" id=\"project-" + esc(id) + "\" data-tags=\"" + esc(JSON.stringify(tags)) + "\">" +
-        "<a class=\"card-thumb\" href=\"" + esc(href) + "\"" + outbound + ">" +
-          "<img src=\"" + esc(src) + "\" alt=\"" + esc(alt) + "\" width=\"800\" height=\"700\">" +
+      "<li class=\"work-row\" data-title=\"" + esc(title) + "\" data-shot=\"" + esc(src) + "\" data-tags=\"" + esc(JSON.stringify(tags)) + "\">" +
+        "<a class=\"work-link\" href=\"" + esc(href) + "\"" + outbound + ">" +
+          "<span class=\"work-index\">" + number + "</span>" +
+          "<span class=\"work-copy\">" +
+            "<span class=\"work-title\">" + esc(title) + "</span>" +
+            "<span class=\"work-meta\">" + time + (stack ? "<span class=\"work-stack\">" + esc(stack) + "</span>" : "") + "</span>" +
+          "</span>" +
+          "<img class=\"work-inline\" src=\"" + esc(src) + "\" alt=\"\" width=\"112\" height=\"98\">" +
         "</a>" +
-        "<div class=\"card-meta\">" +
-          "<a class=\"card-title\" href=\"" + esc(href) + "\"" + outbound + ">" + esc(title) + "</a>" +
-          "<div class=\"card-actions\">" +
-            "<a class=\"icon-button\" href=\"" + esc(src) + "\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"" + esc("Zoom " + title) + "\">" + icon("zoom") + "</a>" +
-            "<button type=\"button\" class=\"icon-button\" data-device aria-pressed=\"false\" aria-label=\"" + esc("View " + title + " on a phone") + "\">" + icon("phone") + "</button>" +
-            "<button type=\"button\" class=\"icon-button\" data-related aria-label=\"" + esc("Show work related to " + title) + "\">" + icon("related") + "</button>" +
-            "<button type=\"button\" class=\"icon-button\" data-favorite aria-pressed=\"false\" aria-label=\"" + esc("Save " + title) + "\">" + icon("heart") + "</button>" +
-          "</div>" +
-        "</div>" +
-        "<p class=\"card-foot\">" + time + creditHtml + "</p>" +
-        "<ul class=\"tag-list card-tags\">" + tagsHtml + "</ul>" +
       "</li>"
     );
   }
 
   function renderGrid() {
-    var grid = document.querySelector("[data-grid]");
-    if (!grid) return;
-    var used = {};
-    grid.innerHTML = projectList().map(function (project) {
-      return renderCard(project, used);
-    }).filter(Boolean).join("");
-    watchCards(grid);
+    var list = document.querySelector("[data-work]");
+    if (!list) return;
+    var rows = [];
+    projectList().forEach(function (project, index) {
+      var html = renderRow(project, index);
+      if (html) rows.push(html);
+    });
+    list.innerHTML = rows.join("");
+    ensureFollower();
+    watchRows(list);
   }
 
-  function watchCards(grid) {
+  function watchRows(list) {
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var cards = grid.querySelectorAll(".card");
+    var rows = list.querySelectorAll(".work-row");
     if (reduce || !("IntersectionObserver" in window)) {
-      cards.forEach(function (card) { card.classList.add("is-in"); });
+      rows.forEach(function (row) { row.classList.add("is-in"); });
       return;
     }
     var observer = new IntersectionObserver(function (entries) {
@@ -273,7 +255,29 @@
         observer.unobserve(entry.target);
       });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
-    cards.forEach(function (card) { observer.observe(card); });
+    rows.forEach(function (row) { observer.observe(row); });
+  }
+
+  function ensureFollower() {
+    if (document.querySelector(".follow-shot")) return;
+    var shot = document.createElement("div");
+    shot.className = "follow-shot";
+    shot.setAttribute("aria-hidden", "true");
+    shot.innerHTML = "<img alt=\"\">";
+    document.body.appendChild(shot);
+    var img = shot.querySelector("img");
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    document.addEventListener("pointermove", function (event) {
+      var row = event.target && event.target.closest ? event.target.closest(".work-row") : null;
+      if (!row || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        shot.classList.remove("is-on");
+        return;
+      }
+      img.src = row.getAttribute("data-shot") || "";
+      shot.classList.add("is-on");
+      shot.style.left = (event.clientX + 28) + "px";
+      shot.style.top = (event.clientY + 28) + "px";
+    });
   }
 
   function cardTags(card) {
@@ -292,7 +296,7 @@
       button.setAttribute("aria-pressed", on ? "true" : "false");
       button.classList.toggle("is-active", on);
     });
-    var cards = document.querySelectorAll(".card");
+    var cards = document.querySelectorAll(".work-row");
     var shown = 0;
     cards.forEach(function (card) {
       var match = normalized === "all" || cardTags(card).indexOf(normalized) !== -1;
