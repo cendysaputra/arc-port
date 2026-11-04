@@ -111,16 +111,16 @@
       words.forEach(function (word, index) {
         var span = document.createElement("span");
         span.className = "reveal";
-        span.style.animationDelay = (index * 90) + "ms";
+        span.style.animationDelay = (index * 60) + "ms";
         span.textContent = word;
         name.appendChild(span);
         if (index < words.length - 1) name.appendChild(document.createTextNode(" "));
       });
       name.dataset.revealed = "true";
     }
-    document.querySelectorAll(".hero-rule, .hero-sentence").forEach(function (el, index) {
+    document.querySelectorAll(".hero-sentence, .hero-mark").forEach(function (el, index) {
       el.classList.add("reveal");
-      el.style.animationDelay = (260 + index * 120) + "ms";
+      el.style.animationDelay = (120 + index * 60) + "ms";
     });
   }
 
