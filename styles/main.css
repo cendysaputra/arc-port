@@ -384,6 +384,14 @@ a.contact:visited {
 .card {
   position: relative;
   min-width: 0;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.card.is-in {
+  opacity: 1;
+  transform: none;
 }
 
 .card:hover,
@@ -407,6 +415,8 @@ a.contact:visited {
   object-fit: cover;
   filter: grayscale(1);
   border-radius: 0;
+  transform: scale(1);
+  transition: filter 0.45s ease, transform 0.45s ease;
 }
 
 .card.is-phone .card-thumb img {
@@ -561,6 +571,17 @@ a.contact:visited {
     color: var(--mb-ink);
     border-color: var(--mb-ink);
   }
+
+  .card:hover .card-thumb img,
+  .card:focus-within .card-thumb img {
+    filter: grayscale(0);
+    transform: scale(1.035);
+  }
+
+  .card:hover .card-title,
+  .card:focus-within .card-title {
+    text-decoration-thickness: 2px;
+  }
 }
 
 .cursor {
@@ -646,10 +667,17 @@ a.contact:visited {
   .hero-name .reveal,
   .hero-sentence.reveal,
   .hero-rule.reveal,
-  .hero-marquee-track {
+  .hero-marquee-track,
+  .card {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  .card-thumb img {
+    transition: none;
+    transform: none;
+    filter: grayscale(1);
   }
 
   *,
