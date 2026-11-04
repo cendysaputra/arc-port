@@ -100,6 +100,41 @@
     }
     applyContact(site.contact);
     if (Array.isArray(site.tags)) renderHeroTags(site.tags);
+    revealHero();
+    fillHeroMeta();
+  }
+
+  function revealHero() {
+    var name = document.querySelector("[data-hero-name]");
+    if (name && name.dataset.revealed !== "true") {
+      var words = name.textContent.trim().split(/\s+/);
+      name.textContent = "";
+      words.forEach(function (word, index) {
+        var span = document.createElement("span");
+        span.className = "reveal";
+        span.style.animationDelay = (index * 90) + "ms";
+        span.textContent = word;
+        name.appendChild(span);
+        if (index < words.length - 1) name.appendChild(document.createTextNode(" "));
+      });
+      name.dataset.revealed = "true";
+    }
+    document.querySelectorAll(".hero-rule, .hero-sentence").forEach(function (el, index) {
+      el.classList.add("reveal");
+      el.style.animationDelay = (260 + index * 120) + "ms";
+    });
+  }
+
+  function fillHeroMeta() {
+    var projects = projectList();
+    var count = document.querySelector("[data-project-count]");
+    if (count) count.textContent = projects.length + " proyek";
+    var track = document.querySelector("[data-marquee]");
+    if (!track) return;
+    var titles = projects.map(function (project) { return text(project.title); }).filter(Boolean);
+    if (!titles.length) return;
+    var line = titles.join("  ·  ") + "  ·  ";
+    track.textContent = line + line;
   }
 
   function slug(value) {
