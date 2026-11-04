@@ -3,7 +3,7 @@
  * Replace these values when copy or images change; keep the field names.
  *
  *   name, sentence, about, description
- *   contact  { label, href, text }  href is https (the button label stays label)
+ *   contact  { label, href, text }  href is mailto: or https (the button label stays label)
  *   tags     Hero filter labels.
  *   projects[]
  *     id, title, href, thumb, alt, year, tags
@@ -20,7 +20,7 @@ window.SITE = {
   description: "Portfolio of Cendy Saputra. Situs WordPress dan Laravel bersama Imajiner.",
   contact: {
     label: "Contact",
-    href: "https://github.com/cendysaputra",
+    href: "mailto:ce.createe@gmail.com",
     text: "GitHub"
   },
   tags: ["WordPress", "Laravel"],
