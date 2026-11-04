@@ -40,12 +40,12 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: "Noto Sans JP", sans-serif;
+  /* IBM Plex Sans from Google Fonts (weights 400 and 700). The family has no 800, so display text uses 700. */
+  font-family: "IBM Plex Sans", sans-serif;
   font-weight: 400;
   font-size: 13px;
   line-height: 1.6;
-  letter-spacing: 0.08em;
-  font-feature-settings: "palt";
+  letter-spacing: 0;
 }
 
 h1,
@@ -141,15 +141,15 @@ button {
 
 .logo {
   font-size: 24px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: 1.2px;
+  letter-spacing: 0;
 }
 
 .tagline {
   margin-top: 6px;
   font-size: 11px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.01em;
 }
 
 .nav {
@@ -165,7 +165,7 @@ button {
 
 .nav a {
   font-size: 13px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
 }
 
 .hero {
@@ -175,9 +175,9 @@ button {
 .hero-name,
 .footer-name {
   font-size: 30px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.15;
-  letter-spacing: 1.6px;
+  letter-spacing: -0.02em;
 }
 
 .hero-sentence {
@@ -210,7 +210,7 @@ button {
   font-size: 12px;
   font-weight: 400;
   line-height: 1.2;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.02em;
   text-align: center;
   text-decoration: none;
   transition: transform 0.1s, box-shadow 0.1s;
@@ -236,7 +236,7 @@ a.contact:hover {
   color: var(--ink);
   font-size: 12px;
   line-height: 1.4;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.02em;
   transition: background-color 0.2s, color 0.2s;
 }
 
@@ -253,7 +253,7 @@ a.contact:hover {
 .grid-note {
   margin: 0 0 20px;
   font-size: 13px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
 }
 
 .grid {
@@ -315,7 +315,7 @@ a.contact:hover {
   font-size: 13px;
   font-weight: 400;
   line-height: 1.6;
-  letter-spacing: 0.1em;
+  letter-spacing: 0;
 }
 
 .card-actions {
@@ -351,13 +351,13 @@ a.contact:hover {
   gap: 6px 10px;
   margin-top: 2px;
   font-size: 12px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   font-variant-numeric: tabular-nums;
 }
 
 .card-foot .link {
   font-size: 12px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
 }
 
 .card-tags {
@@ -368,7 +368,7 @@ a.contact:hover {
   padding: 34px 0 76px;
   border-top: 1px solid var(--ink);
   font-size: 13px;
-  letter-spacing: 1px;
+  letter-spacing: 0;
   text-align: left;
 }
 
@@ -394,15 +394,15 @@ a.contact:hover {
 .footer-group h2 {
   margin-bottom: 10px;
   font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
 .footer-group p {
   max-width: 36em;
   font-size: 13px;
   line-height: 1.6;
-  letter-spacing: 1px;
+  letter-spacing: 0;
 }
 
 .footer-links {
@@ -413,13 +413,13 @@ a.contact:hover {
 
 .footer-links a {
   font-size: 12px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
 }
 
 .colophon {
   margin-top: 30px;
   font-size: 12px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
 }
 
 ::selection {
