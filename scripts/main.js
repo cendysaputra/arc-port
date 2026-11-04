@@ -45,22 +45,18 @@
     if (button) {
       if (href && href !== "#") button.setAttribute("href", href);
       if (text(contact.label)) button.textContent = text(contact.label);
+      if (/^mailto:/i.test(href)) {
+        button.removeAttribute("target");
+        button.removeAttribute("rel");
+      } else {
+        markExternal(button, href);
+      }
     }
-    markExternal(button, href);
     var footer = document.querySelector("[data-contact-link]");
-    if (!footer || !href || href === "#") return;
+    if (!footer || !href || href === "#" || /^mailto:/i.test(href)) return;
     footer.setAttribute("href", href);
     markExternal(footer, href);
-    var mail = /^mailto:([^?]+)/i.exec(String(contact.href).trim());
-    if (mail) {
-      try {
-        footer.textContent = decodeURIComponent(mail[1]);
-      } catch (err) {
-        footer.textContent = mail[1];
-      }
-    } else if (text(contact.text)) {
-      footer.textContent = text(contact.text);
-    }
+    if (text(contact.text)) footer.textContent = text(contact.text);
   }
 
   function markExternal(el, href) {
