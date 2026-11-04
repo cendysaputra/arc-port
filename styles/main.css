@@ -68,21 +68,15 @@ ul {
 }
 
 a {
-  color: var(--ink);
+  color: var(--mb-text);
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
+  text-underline-offset: 3px;
   transition: text-decoration-thickness 0.15s;
 }
 
 a:visited {
-  color: var(--ink);
-}
-
-.card-thumb,
-.icon-button,
-.skip {
-  text-decoration: none;
+  color: var(--mb-text);
 }
 
 .card a {
@@ -222,24 +216,23 @@ button {
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  width: 96px;
-  height: 96px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  background: var(--white);
-  color: var(--ink);
+  min-width: 96px;
+  min-height: 44px;
+  padding: 12px 16px;
+  border: 1px solid var(--mb-ink);
+  border-radius: var(--mb-radius);
+  background: var(--mb-ink);
+  color: var(--mb-bg);
   font-size: 13px;
   font-weight: 400;
   line-height: 1.2;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   text-align: center;
-  text-decoration: none;
-  transition: transform 0.1s, box-shadow 0.1s;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
 }
 
-a.contact:visited,
-a.contact:hover {
-  color: var(--ink);
+a.contact:visited {
+  color: var(--mb-bg);
 }
 
 .tag-list {
@@ -249,22 +242,31 @@ a.contact:hover {
 }
 
 .tag {
-  display: inline-block;
-  margin: 0 3px 6px 0;
-  padding: 2px 5px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 12px 8px 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
   background: transparent;
-  color: var(--ink);
+  color: var(--mb-muted);
   font-size: 13px;
   line-height: 1.4;
-  letter-spacing: 0.02em;
-  transition: background-color 0.2s, color 0.2s;
+  letter-spacing: 0;
 }
 
 .tag[aria-pressed="true"] {
-  background: var(--ink);
-  color: #fff;
+  background: transparent;
+  color: var(--mb-ink);
+}
+
+.tag[aria-pressed="true"]::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  background: var(--mb-ink);
 }
 
 .work {
@@ -305,10 +307,9 @@ a.contact:hover {
   display: block;
   aspect-ratio: 8 / 7;
   overflow: hidden;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  background: var(--surface);
-  transition: transform 0.1s, box-shadow 0.1s;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .card-thumb img {
@@ -316,6 +317,8 @@ a.contact:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: grayscale(1);
+  border-radius: 0;
 }
 
 .card.is-phone .card-thumb img {
@@ -380,7 +383,7 @@ a.contact:hover {
 }
 
 .card-foot .link {
-  color: var(--mb-text);
+  color: var(--mb-muted);
   font-size: 13px;
   letter-spacing: 0;
 }
@@ -391,7 +394,7 @@ a.contact:hover {
 
 .site-footer {
   padding: 34px 0 76px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--mb-line);
   font-size: 13px;
   letter-spacing: 0;
   text-align: left;
@@ -425,7 +428,7 @@ a.contact:hover {
 
 .footer-group p {
   max-width: 36em;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.6;
   letter-spacing: 0;
 }
@@ -454,50 +457,22 @@ a.contact:hover {
 }
 
 :focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--mb-ink);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px #fff;
+  box-shadow: 0 0 0 4px var(--mb-bg);
 }
 
 @media (hover: hover) and (pointer: fine) {
   a:hover {
-    color: var(--ink);
     text-decoration-thickness: 2px;
   }
 
-  .card-thumb:hover,
-  .icon-button:hover,
-  .skip:hover {
-    text-decoration: none;
+  a.contact:hover,
+  a.contact:visited:hover {
+    background: var(--mb-bg);
+    color: var(--mb-ink);
+    border-color: var(--mb-ink);
   }
-
-  button.tag:hover {
-    background: var(--ink);
-    color: #fff;
-  }
-
-  .contact:hover {
-    transform: var(--lift);
-    box-shadow: var(--hard-shadow);
-  }
-
-  .card:hover .card-thumb {
-    transform: var(--lift);
-    box-shadow: var(--hard-shadow);
-  }
-}
-
-.card:focus-within .card-thumb {
-  transform: var(--lift);
-  box-shadow: var(--hard-shadow);
-}
-
-.card .card-thumb:focus-visible,
-.contact:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 2px;
-  transform: var(--lift);
-  box-shadow: var(--hard-shadow), 0 0 0 4px #fff;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -512,13 +487,5 @@ a.contact:hover {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-
-  .contact:hover,
-  .contact:focus-visible,
-  .card:hover .card-thumb,
-  .card:focus-within .card-thumb,
-  .card .card-thumb:focus-visible {
-    transform: none !important;
   }
 }
