@@ -159,9 +159,9 @@
   function placeholderSvg(title) {
     var label = esc(title).slice(0, 28);
     var svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 700\">" +
-      "<rect width=\"800\" height=\"700\" fill=\"#fafafa\"/>" +
-      "<rect x=\"48\" y=\"48\" width=\"704\" height=\"604\" fill=\"none\" stroke=\"#2f2725\" stroke-width=\"2\"/>" +
-      "<text x=\"88\" y=\"360\" fill=\"#2f2725\" font-family=\"sans-serif\" font-size=\"42\">" + label + "</text></svg>";
+      "<rect width=\"800\" height=\"700\" fill=\"#f5f5f5\"/>" +
+      "<rect x=\"48\" y=\"48\" width=\"704\" height=\"604\" fill=\"none\" stroke=\"#090909\" stroke-width=\"2\"/>" +
+      "<text x=\"88\" y=\"360\" fill=\"#090909\" font-family=\"IBM Plex Sans, sans-serif\" font-size=\"42\">" + label + "</text></svg>";
     return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
   }
 

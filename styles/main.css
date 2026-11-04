@@ -6,6 +6,7 @@
   --mb-muted: #6b6b6b;
   --mb-line: #e0e0e0;
   --mb-disabled: #a8a8a8; /* decoration and disabled only, never text */
+  --mb-tile: #f5f5f5;
   --mb-radius: 0;
   --bg: var(--mb-bg);
   --paper: var(--mb-bg);
