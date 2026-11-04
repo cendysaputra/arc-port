@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" fill="none">
+
+  <rect width="800" height="700" fill="#fafafa"/>
+  <path d="M72 48 H120 M48 72 V120" stroke="#2f2725" stroke-width="2"/>
+  <path d="M680 48 H728 M752 72 V120" stroke="#2f2725" stroke-width="2"/>
+  <path d="M48 580 V628 M72 652 H120" stroke="#2f2725" stroke-width="2"/>
+  <path d="M752 580 V628 M680 652 H728" stroke="#2f2725" stroke-width="2"/>
+  <rect x="150" y="120" width="500" height="340" fill="#2f2725"/>
+  <rect x="150" y="492" width="280" height="12" fill="#e4e3e0"/>
+  <rect x="150" y="520" width="180" height="12" fill="#e4e3e0"/>
+  <rect x="560" y="492" width="90" height="12" fill="#0062db"/>
+
+</svg>
