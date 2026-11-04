@@ -356,7 +356,22 @@
     setFilter(active ? "all" : filter.dataset.filter);
   });
 
+  function tickJakarta() {
+    var clock = document.querySelector("[data-jakarta-time]");
+    if (!clock) return;
+    clock.textContent = new Intl.DateTimeFormat("id-ID", {
+      timeZone: "Asia/Jakarta",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hourCycle: "h23"
+    }).format(new Date());
+    clock.setAttribute("datetime", new Date().toISOString());
+  }
+
   hydrate();
   renderGrid();
   setFilter("all");
+  tickJakarta();
+  window.setInterval(tickJakarta, 1000);
 })();

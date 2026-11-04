@@ -544,6 +544,24 @@ a.contact:visited {
   margin: 0 8%;
 }
 
+.footer-mail {
+  display: inline-block;
+  max-width: 100%;
+  color: var(--mb-ink);
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+
+.footer-time {
+  margin: 12px 0 40px;
+  color: var(--mb-muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
 .footer-name {
   margin-bottom: 24px;
 }
