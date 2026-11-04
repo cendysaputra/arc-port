@@ -1,20 +1,23 @@
 :root {
   color-scheme: light;
-  /* Monoblack. Secondary text is #6b6b6b, about 5.3:1 on white. */
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --ink: #111111;
-  --text: #111111;
-  --text-secondary: #6b6b6b;
-  --paper: var(--bg);
-  --white: #ffffff;
-  --ink-soft: var(--text-secondary);
-  --line: #e6e6e6;
-  --border-color: #111111;
-  --link: var(--ink);
-  --link-hover: var(--ink);
-  --link-tint: #e6e6e6;
-  --radius: 0;
+  --mb-bg: #ffffff;
+  --mb-ink: #090909;
+  --mb-text: #323232;
+  --mb-muted: #6b6b6b;
+  --mb-line: #e0e0e0;
+  --mb-disabled: #a8a8a8; /* decoration and disabled only, never text */
+  --mb-radius: 0;
+  --bg: var(--mb-bg);
+  --paper: var(--mb-bg);
+  --white: var(--mb-bg);
+  --surface: var(--mb-bg);
+  --ink: var(--mb-ink);
+  --text: var(--mb-text);
+  --text-secondary: var(--mb-muted);
+  --ink-soft: var(--mb-muted);
+  --line: var(--mb-line);
+  --border-color: var(--mb-ink);
+  --radius: var(--mb-radius);
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -22,8 +25,6 @@
   --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
-  --lift: translate(-5px, -5px);
-  --hard-shadow: 5px 5px var(--ink);
 }
 
 *,
@@ -38,8 +39,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--mb-bg);
+  color: var(--mb-text);
   /* IBM Plex Sans from Google Fonts (weights 400 and 700). The family has no 800, so display text uses 700. */
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 400;
@@ -439,8 +440,8 @@ a.contact:hover {
 }
 
 ::selection {
-  background: var(--link-tint);
-  color: var(--ink);
+  background: var(--mb-line);
+  color: var(--mb-text);
 }
 
 :focus-visible {
