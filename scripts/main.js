@@ -269,6 +269,24 @@
     grid.innerHTML = projectList().map(function (project) {
       return renderCard(project, used);
     }).filter(Boolean).join("");
+    watchCards(grid);
+  }
+
+  function watchCards(grid) {
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var cards = grid.querySelectorAll(".card");
+    if (reduce || !("IntersectionObserver" in window)) {
+      cards.forEach(function (card) { card.classList.add("is-in"); });
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-in");
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    cards.forEach(function (card) { observer.observe(card); });
   }
 
   function cardTags(card) {
