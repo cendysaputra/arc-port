@@ -203,18 +203,18 @@ button {
 
 .hero-name .reveal,
 .hero-sentence.reveal,
-.hero-rule.reveal {
-  animation: hero-rise 0.7s ease forwards;
+.hero-mark.reveal {
+  animation: hero-rise 400ms cubic-bezier(.2, .7, 0, 1) forwards;
 }
 
 .hero-name .reveal {
   display: inline-block;
   opacity: 0;
-  transform: translateY(0.4em);
+  transform: translateY(12px);
 }
 
 .hero-sentence.reveal,
-.hero-rule.reveal {
+.hero-mark.reveal {
   opacity: 0;
   transform: translateY(12px);
 }
@@ -672,12 +672,15 @@ a.contact:visited {
 
   .hero-name .reveal,
   .hero-sentence.reveal,
-  .hero-rule.reveal,
-  .hero-marquee-track,
-  .card {
+  .hero-mark.reveal,
+  .work-row,
+  .work-row.is-in,
+  .work-row.is-in:hover,
+  .work-row.is-in:focus-within {
     animation: none;
     opacity: 1;
     transform: none;
+    transition: none;
   }
 
   .card-thumb img {
