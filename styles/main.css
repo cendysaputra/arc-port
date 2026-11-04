@@ -1,14 +1,27 @@
 :root {
   color-scheme: light;
-  --ink: #2f2725;
-  --paper: #fafafa;
-  --white: #fff;
-  --ink-soft: #5c4e4a;
-  --line: #e4e3e0;
-  --link: #0062db;
-  --link-hover: #006aee;
-  --link-tint: #b1d9ff;
-  --alert: #eb0010;
+  /* Monoblack. Secondary text is #6b6b6b, about 5.3:1 on white. */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --ink: #111111;
+  --text: #111111;
+  --text-secondary: #6b6b6b;
+  --paper: var(--bg);
+  --white: #ffffff;
+  --ink-soft: var(--text-secondary);
+  --line: #e6e6e6;
+  --border-color: #111111;
+  --link: var(--ink);
+  --link-hover: var(--ink);
+  --link-tint: #e6e6e6;
+  --radius: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
   --lift: translate(-5px, -5px);
   --hard-shadow: 5px 5px var(--ink);
 }
