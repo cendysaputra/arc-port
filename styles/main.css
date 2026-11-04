@@ -4,14 +4,11 @@
   --paper: #fafafa;
   --white: #fff;
   --ink-soft: #5c4e4a;
-  --muted: #898480;
   --line: #e4e3e0;
-  --faint: #bdbcbc;
   --link: #0062db;
   --link-hover: #006aee;
   --link-tint: #b1d9ff;
   --alert: #eb0010;
-  --pink: #ff5081;
   --lift: translate(-5px, -5px);
   --hard-shadow: 5px 5px var(--ink);
 }
