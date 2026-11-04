@@ -165,6 +165,16 @@
       (paths[name] || "") + "</svg>";
   }
 
+  function filterTagSet() {
+    var set = {};
+    var list = Array.isArray(site.tags) ? site.tags : [];
+    list.forEach(function (tag) {
+      var label = String(tag == null ? "" : tag).trim();
+      if (label && label.toLowerCase() !== "all") set[label] = true;
+    });
+    return set;
+  }
+
   function tagList(project) {
     if (!Array.isArray(project.tags)) return [];
     return project.tags.map(function (tag) {
@@ -193,7 +203,11 @@
     var creditHtml = credit
       ? "<a class=\"link credit\" href=\"" + esc(creditHref) + "\"" + creditOutbound + ">" + esc(credit) + "</a>"
       : "";
+    var filters = filterTagSet();
     var tagsHtml = tags.map(function (tag) {
+      if (!filters[tag]) {
+        return "<li><span class=\"tag\">" + esc(tag) + "</span></li>";
+      }
       return "<li><button type=\"button\" class=\"tag\" data-filter=\"" + esc(tag) + "\" aria-pressed=\"false\">" + esc(tag) + "</button></li>";
     }).join("");
 
@@ -283,7 +297,12 @@
     if (related) {
       var host = related.closest(".card");
       var tags = host ? cardTags(host) : [];
-      if (tags[0]) setFilter(tags[0]);
+      var filters = filterTagSet();
+      var pick = "";
+      tags.forEach(function (tag) {
+        if (!pick && filters[tag]) pick = tag;
+      });
+      if (pick) setFilter(pick);
       return;
     }
 
