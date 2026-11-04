@@ -23,7 +23,7 @@ window.SITE = {
     href: "https://github.com/cendysaputra",
     text: "GitHub"
   },
-  tags: ["Web Dev", "WordPress", "Laravel"],
+  tags: ["WordPress", "Laravel"],
   projects: [
     {
       id: "telematica",

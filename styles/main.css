@@ -432,7 +432,7 @@ a.contact:hover {
     color: var(--link-hover);
   }
 
-  .tag:hover {
+  button.tag:hover {
     background: var(--ink);
     color: #fff;
   }
