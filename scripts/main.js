@@ -46,9 +46,11 @@
       if (href && href !== "#") button.setAttribute("href", href);
       if (text(contact.label)) button.textContent = text(contact.label);
     }
+    markExternal(button, href);
     var footer = document.querySelector("[data-contact-link]");
     if (!footer || !href || href === "#") return;
     footer.setAttribute("href", href);
+    markExternal(footer, href);
     var mail = /^mailto:([^?]+)/i.exec(String(contact.href).trim());
     if (mail) {
       try {
@@ -56,8 +58,16 @@
       } catch (err) {
         footer.textContent = mail[1];
       }
-    } else if (text(contact.label)) {
-      footer.textContent = text(contact.label);
+    } else if (text(contact.text)) {
+      footer.textContent = text(contact.text);
+    }
+  }
+
+  function markExternal(el, href) {
+    if (!el) return;
+    if (/^https?:\/\//i.test(href)) {
+      el.setAttribute("target", "_blank");
+      el.setAttribute("rel", "noopener");
     }
   }
 
@@ -117,11 +127,15 @@
   function dateParts(value) {
     var raw = String(value == null ? "" : value).trim();
     var match = /^(\d{4})[/.](\d{2})[/.](\d{2})$/.exec(raw);
-    if (!match) return { label: raw, iso: "" };
-    return {
-      label: match[1] + "/" + match[2] + "/" + match[3],
-      iso: match[1] + "-" + match[2] + "-" + match[3]
-    };
+    if (match) {
+      return {
+        label: match[1] + "/" + match[2] + "/" + match[3],
+        iso: match[1] + "-" + match[2] + "-" + match[3]
+      };
+    }
+    var year = /^(\d{4})$/.exec(raw);
+    if (year) return { label: year[1], iso: year[1] };
+    return { label: raw, iso: "" };
   }
 
   function placeholderSvg(title) {
@@ -165,17 +179,19 @@
     var id = uniqueId(slug(project.id || title), used);
     var href = safeUrl(project.href || ("#project-" + id));
     if (href === "#") href = "#project-" + id;
+    var outbound = /^https?:\/\//i.test(href) ? " target=\"_blank\" rel=\"noopener\"" : "";
     var src = thumbSrc(project, title);
     var alt = text(project.alt) || ("Cover image for " + title);
-    var dated = dateParts(project.date);
+    var dated = dateParts(project.year || project.date);
     var credit = text(project.credit);
     var creditHref = safeUrl(project.creditHref || "#about");
     var tags = tagList(project);
     var time = dated.label
       ? "<time" + (dated.iso ? " datetime=\"" + esc(dated.iso) + "\"" : "") + ">" + esc(dated.label) + "</time>"
       : "";
+    var creditOutbound = /^https?:\/\//i.test(creditHref) ? " target=\"_blank\" rel=\"noopener\"" : "";
     var creditHtml = credit
-      ? "<a class=\"link credit\" href=\"" + esc(creditHref) + "\">" + esc(credit) + "</a>"
+      ? "<a class=\"link credit\" href=\"" + esc(creditHref) + "\"" + creditOutbound + ">" + esc(credit) + "</a>"
       : "";
     var tagsHtml = tags.map(function (tag) {
       return "<li><button type=\"button\" class=\"tag\" data-filter=\"" + esc(tag) + "\" aria-pressed=\"false\">" + esc(tag) + "</button></li>";
@@ -183,11 +199,11 @@
 
     return (
       "<li class=\"card\" id=\"project-" + esc(id) + "\" data-tags=\"" + esc(JSON.stringify(tags)) + "\">" +
-        "<a class=\"card-thumb\" href=\"" + esc(href) + "\">" +
+        "<a class=\"card-thumb\" href=\"" + esc(href) + "\"" + outbound + ">" +
           "<img src=\"" + esc(src) + "\" alt=\"" + esc(alt) + "\" width=\"800\" height=\"700\">" +
         "</a>" +
         "<div class=\"card-meta\">" +
-          "<a class=\"card-title\" href=\"" + esc(href) + "\">" + esc(title) + "</a>" +
+          "<a class=\"card-title\" href=\"" + esc(href) + "\"" + outbound + ">" + esc(title) + "</a>" +
           "<div class=\"card-actions\">" +
             "<a class=\"icon-button\" href=\"" + esc(src) + "\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"" + esc("Zoom " + title) + "\">" + icon("zoom") + "</a>" +
             "<button type=\"button\" class=\"icon-button\" data-device aria-pressed=\"false\" aria-label=\"" + esc("View " + title + " on a phone") + "\">" + icon("phone") + "</button>" +
