@@ -549,15 +549,9 @@ a.contact:visited {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 30;
+  z-index: 40;
   display: none;
   pointer-events: none;
-  will-change: transform;
-}
-
-.cursor-guest {
-  position: absolute;
-  z-index: 4;
 }
 
 .cursor-arrow {
@@ -566,63 +560,33 @@ a.contact:visited {
 
 .cursor-tag {
   position: absolute;
-  top: 16px;
-  left: 14px;
-  padding: 2px 8px;
+  top: 14px;
+  left: 12px;
+  padding: 3px 6px;
+  border-radius: 0;
   background: var(--mb-ink);
   color: var(--mb-bg);
   font-family: "IBM Plex Sans", sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.2;
   letter-spacing: 0;
   white-space: nowrap;
 }
 
-.cursor-guest .cursor-tag {
-  background: var(--mb-bg);
-  color: var(--mb-ink);
-  border: 1px solid var(--mb-ink);
-}
-
 @media (hover: hover) and (pointer: fine) {
-  html.has-live-cursor,
-  html.has-live-cursor body {
-    cursor: none;
-  }
-
-  .cursor-guest {
-    display: block;
-  }
-
-  html.has-live-cursor .cursor-self {
-    display: block;
-  }
-
-  html.has-live-cursor.is-keyboard,
-  html.has-live-cursor.is-keyboard body,
-  html.has-live-cursor.is-keyboard * {
-    cursor: auto;
-  }
-
-  html.has-live-cursor.is-keyboard .cursor-self {
-    display: none;
-  }
-}
-
-@media (pointer: coarse) {
   .cursor {
-    display: none !important;
+    display: block;
+  }
+
+  .work-row:hover {
+    cursor: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  .cursor {
-    display: none !important;
   }
 
   .hero-name .reveal,
