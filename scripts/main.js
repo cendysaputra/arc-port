@@ -101,7 +101,6 @@
     applyContact(site.contact);
     if (Array.isArray(site.tags)) renderHeroTags(site.tags);
     revealHero();
-    fillHeroMeta();
   }
 
   function revealHero() {
@@ -123,18 +122,6 @@
       el.classList.add("reveal");
       el.style.animationDelay = (260 + index * 120) + "ms";
     });
-  }
-
-  function fillHeroMeta() {
-    var projects = projectList();
-    var count = document.querySelector("[data-project-count]");
-    if (count) count.textContent = projects.length + " proyek";
-    var track = document.querySelector("[data-marquee]");
-    if (!track) return;
-    var titles = projects.map(function (project) { return text(project.title); }).filter(Boolean);
-    if (!titles.length) return;
-    var line = titles.join("  ·  ") + "  ·  ";
-    track.textContent = line + line;
   }
 
   function slug(value) {
