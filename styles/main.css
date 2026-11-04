@@ -27,7 +27,7 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: "avenir-next-world", "Noto Sans JP", "Yu Gothic Medium", YuGothic, "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   font-weight: 400;
   font-size: 13px;
   line-height: 1.6;
