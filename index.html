@@ -28,8 +28,23 @@
     </nav>
   </header>
 
-  <main id="content"></main>
+  <main id="content">
+    <section class="hero" aria-labelledby="hero-name">
+      <h1 id="hero-name" class="hero-name" data-hero-name>Cendy Saputra</h1>
+      <p class="hero-sentence" data-hero-sentence>I design and build quiet interfaces where type, grid, and a hard edge do the talking.</p>
+      <div class="hero-row">
+        <a class="contact" data-contact href="mailto:ce.createe@gmail.com">Contact</a>
+        <ul class="tag-list hero-tags" data-hero-tags aria-label="Filter projects by tag">
+          <li><button type="button" class="tag is-active" data-filter="all" aria-pressed="true">All</button></li>
+          <li><button type="button" class="tag" data-filter="Interface" aria-pressed="false">Interface</button></li>
+          <li><button type="button" class="tag" data-filter="Editorial" aria-pressed="false">Editorial</button></li>
+          <li><button type="button" class="tag" data-filter="Identity" aria-pressed="false">Identity</button></li>
+          <li><button type="button" class="tag" data-filter="Type" aria-pressed="false">Type</button></li>
+        </ul>
+      </div>
+    </section>
 
+  </main>
 
   <footer class="site-footer">
     <div class="footer-inner">
