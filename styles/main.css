@@ -329,30 +329,111 @@ a.contact:visited {
   letter-spacing: 0;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px 20px;
-  min-width: 0;
+.work-list {
+  margin: 48px 6% 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--mb-line);
 }
 
-@container (max-width: 299px) {
-  .grid {
-    grid-template-columns: minmax(0, 1fr);
+.work-row {
+  border-top: 1px solid var(--mb-line);
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.work-row.is-in {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 400ms cubic-bezier(.2, .7, 0, 1), transform 400ms cubic-bezier(.2, .7, 0, 1);
+}
+
+.work-link {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  gap: 12px 20px;
+  align-items: end;
+  padding: 28px 0;
+  color: var(--mb-text);
+}
+
+.work-index {
+  color: var(--mb-muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.work-title {
+  display: block;
+  color: var(--mb-ink);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.work-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 8px;
+  color: var(--mb-muted);
+  font-size: 13px;
+}
+
+.work-inline {
+  display: none;
+  width: 84px;
+  aspect-ratio: 8 / 7;
+  object-fit: cover;
+  filter: grayscale(1);
+  justify-self: end;
+}
+
+.follow-shot {
+  position: fixed;
+  z-index: 35;
+  left: 0;
+  top: 0;
+  display: none;
+  width: min(240px, 28vw);
+  aspect-ratio: 8 / 7;
+  overflow: hidden;
+  pointer-events: none;
+  background: transparent;
+}
+
+.follow-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .follow-shot.is-on {
+    display: block;
+  }
+
+  .work-row.is-in:hover,
+  .work-row.is-in:focus-within {
+    transform: translateX(8px);
   }
 }
 
-.card {
-  position: relative;
-  min-width: 0;
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
+@media (hover: none), (pointer: coarse) {
+  .work-link {
+    grid-template-columns: 2.4rem minmax(0, 1fr) 84px;
+  }
 
-.card.is-in {
-  opacity: 1;
-  transform: none;
+  .work-inline {
+    display: block;
+  }
+
+  .follow-shot {
+    display: none !important;
+  }
 }
 
 .card:hover,
