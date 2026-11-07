@@ -52,6 +52,17 @@
     }
     applyContact(site.contact);
     applyFooterMail(site.contact);
+    applyProjectCount();
+  }
+
+  function applyProjectCount() {
+    var node = document.querySelector("[data-project-count]");
+    if (!node) return;
+    var n = 0;
+    projectList().forEach(function (project) {
+      if (project && text(project.title)) n += 1;
+    });
+    node.textContent = n === 1 ? "1 project" : n + " projects";
   }
 
   function applyFooterMail(contact) {
