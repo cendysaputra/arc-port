@@ -196,19 +196,31 @@ img {
 .tag-list {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 20px;
+  align-items: flex-end;
+  column-gap: 2px;
+  row-gap: 0;
+  border-bottom: 1px solid var(--mb-line);
 }
 
 .tag {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 32px;
-  padding: 4px 0;
+  min-height: 44px;
+  padding: 12px 14px 10px 0;
   color: var(--mb-muted);
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: 0.045em;
+  transition: color 0.15s ease;
+}
+
+.tag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  background: transparent;
 }
 
 .tag[aria-pressed="true"] {
@@ -216,10 +228,6 @@ img {
 }
 
 .tag[aria-pressed="true"]::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  flex: 0 0 auto;
   background: var(--mb-ink);
 }
 
@@ -390,6 +398,10 @@ img {
 @media (hover: hover) and (pointer: fine) {
   a:hover {
     text-decoration-thickness: 2px;
+  }
+
+  .tag:hover {
+    color: var(--mb-ink);
   }
 }
 
