@@ -114,6 +114,42 @@ img {
   color: var(--mb-text);
 }
 
+.site-header {
+  padding: 32px var(--mb-margin) 0;
+}
+
+.site-id {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.site-name {
+  min-width: 0;
+  color: var(--mb-ink);
+  font-size: 20px;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+}
+
+.site-intro {
+  max-width: 40em;
+  margin-top: 6px;
+  color: var(--mb-text);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+.contact {
+  flex: 0 0 auto;
+  color: var(--mb-ink);
+  font-size: 16px;
+  line-height: 1.2;
+}
+
 @media (hover: hover) and (pointer: fine) {
   a:hover {
     text-decoration-thickness: 2px;
