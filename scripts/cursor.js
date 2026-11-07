@@ -3,57 +3,79 @@
 
   var fine = window.matchMedia("(hover: hover) and (pointer: fine)");
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (!fine.matches) return;
-
   var root = document.documentElement;
+
   var cursor = document.createElement("div");
   cursor.className = "cursor";
   cursor.setAttribute("aria-hidden", "true");
-  cursor.innerHTML = "<svg class=\"cursor-arrow\" width=\"14\" height=\"14\" viewBox=\"0 0 18 18\" aria-hidden=\"true\" focusable=\"false\">" +
-    "<path fill=\"#090909\" d=\"M1 1 L1 15.2 L5.1 11.1 L8.3 17 L10.6 15.9 L7.4 10 L13.2 10 Z\"></path></svg>" +
-    "<span class=\"cursor-tag\">Cendy</span>";
+  cursor.innerHTML =
+    "<svg class=\"cursor-arrow\" width=\"20\" height=\"20\" viewBox=\"-1 -1 20 20\" aria-hidden=\"true\" focusable=\"false\">" +
+      "<path fill=\"#ffffff\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-linejoin=\"round\" d=\"M1.2 1.2 L1.2 14.2 L4.8 10.6 L7.7 16 L9.8 15 L6.9 9.6 L12.2 9.6 Z\"></path>" +
+      "<path fill=\"#090909\" d=\"M1.2 1.2 L1.2 14.2 L4.8 10.6 L7.7 16 L9.8 15 L6.9 9.6 L12.2 9.6 Z\"></path>" +
+    "</svg>" +
+    "<span class=\"cursor-label\" hidden></span>";
   document.body.appendChild(cursor);
-  var tag = cursor.querySelector(".cursor-tag");
 
+  var label = cursor.querySelector(".cursor-label");
   var targetX = 0;
   var targetY = 0;
   var x = 0;
   var y = 0;
-  var seen = false;
+  var active = false;
+  var pointed = null;
 
-  function labelFor(target) {
-    if (!target || !target.closest) return "Cendy";
-    var filter = target.closest("[data-filter]");
-    if (filter) return filter.textContent.replace(/\s+/g, " ").trim();
-    var row = target.closest(".work-row");
-    if (row && row.getAttribute("data-title")) return row.getAttribute("data-title");
-    if (target.closest("a, button")) return "Open \u2197";
-    return "Cendy";
+  function hide() {
+    active = false;
+    root.classList.remove("has-cursor");
+    if (pointed) {
+      pointed.classList.remove("is-pointed");
+      pointed = null;
+    }
+    label.hidden = true;
+    label.textContent = "";
+  }
+
+  function placeLabel(px, py) {
+    label.classList.remove("is-flip-x", "is-flip-y");
+    if (label.hidden) return;
+    var width = label.offsetWidth;
+    var height = label.offsetHeight;
+    if (px + 22 + width > window.innerWidth - 8) label.classList.add("is-flip-x");
+    if (py + 20 + height > window.innerHeight - 8) label.classList.add("is-flip-y");
   }
 
   document.addEventListener("pointermove", function (event) {
-    if (!fine.matches) return;
+    if (!fine.matches) {
+      hide();
+      return;
+    }
+    var card = event.target && event.target.closest ? event.target.closest(".card:not([hidden])") : null;
+    var name = card ? card.getAttribute("data-title") || "" : "";
+    if (!card || !name) {
+      hide();
+      return;
+    }
     targetX = event.clientX;
     targetY = event.clientY;
-    if (!seen || reduce.matches) {
+    if (!active || reduce.matches) {
       x = targetX;
       y = targetY;
-      seen = true;
     }
-    tag.textContent = labelFor(event.target);
-    var row = event.target && event.target.closest ? event.target.closest(".work-row") : null;
-    root.classList.toggle("cursor-on-row", !!row);
+    active = true;
+    if (pointed && pointed !== card) pointed.classList.remove("is-pointed");
+    pointed = card;
+    card.classList.add("is-pointed");
+    root.classList.add("has-cursor");
+    label.hidden = false;
+    label.textContent = name;
+    placeLabel(targetX, targetY);
   });
 
-  function tick() {
-    if (fine.matches && seen) {
-      var ease = reduce.matches ? 1 : 0.18;
-      x += (targetX - x) * ease;
-      y += (targetY - y) * ease;
-      cursor.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
-    }
-    window.requestAnimationFrame(tick);
-  }
+  root.addEventListener("mouseleave", hide);
+
+  fine.addEventListener("change", function () {
+    if (!fine.matches) hide();
+  });
 
   reduce.addEventListener("change", function () {
     if (reduce.matches) {
@@ -61,6 +83,16 @@
       y = targetY;
     }
   });
+
+  function tick() {
+    if (fine.matches && active) {
+      var ease = reduce.matches ? 1 : 0.22;
+      x += (targetX - x) * ease;
+      y += (targetY - y) * ease;
+      cursor.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
+    }
+    window.requestAnimationFrame(tick);
+  }
 
   window.requestAnimationFrame(tick);
 })();

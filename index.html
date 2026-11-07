@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="Portfolio of Cendy Saputra. Situs WordPress dan Laravel bersama Imajiner.">
   <title>Cendy Saputra</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fafafa'/%3E%3Cpath d='M3 13V3h10v10' fill='none' stroke='%232f2725' stroke-width='1.5'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23ffffff'/%3E%3Crect x='4' y='4' width='8' height='8' fill='%23090909'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&amp;display=swap" rel="stylesheet">
@@ -14,68 +14,35 @@
 </head>
 <body>
   <a class="skip" href="#work">Skip to work</a>
-
   <header class="site-header" id="top">
-    <div class="brand">
-      <p class="logo"><a href="#top">Cendy</a></p>
-      <p class="tagline">Web developer</p>
+    <div class="site-id">
+      <h1 class="site-name" data-site-name>Cendy Saputra</h1>
+      <a class="contact" data-contact href="mailto:ce.createe@gmail.com">Contact</a>
     </div>
-    <nav class="nav" aria-label="Primary">
-      <ul class="nav-list">
-        <li><a href="#work">Work</a></li>
-        <li><a href="#notes">Notes</a></li>
-        <li><a href="#about">About</a></li>
-      </ul>
-    </nav>
+    <p class="site-intro" data-site-intro>Web developer — situs WordPress &amp; Laravel bersama Imajiner.</p>
   </header>
-
   <main id="content">
-    <section class="hero" aria-labelledby="hero-name">
-      <h1 id="hero-name" class="hero-name" data-hero-name>Cendy Saputra</h1>
-      <p class="hero-sentence" data-hero-sentence>Web developer — situs WordPress &amp; Laravel bersama Imajiner.</p>
-      <span class="hero-mark" aria-hidden="true"></span>
-      <div class="hero-row">
-        <a class="contact" data-contact href="mailto:ce.createe@gmail.com">Contact</a>
-        <ul class="tag-list hero-tags" data-hero-tags aria-label="Filter projects by tag">
-          <li><button type="button" class="tag is-active" data-filter="all" aria-pressed="true">All</button></li>
-          <li><button type="button" class="tag" data-filter="WordPress" aria-pressed="false">WordPress</button></li>
-          <li><button type="button" class="tag" data-filter="Laravel" aria-pressed="false">Laravel</button></li>
-        </ul>
-      </div>
-    </section>
-
     <section class="work" id="work" aria-labelledby="work-heading">
       <h2 id="work-heading" class="visually-hidden">Selected work</h2>
+      <ul class="tag-list" data-tags aria-label="Filter projects by tag">
+        <li><button type="button" class="tag" data-filter="all" aria-pressed="true">All</button></li>
+        <li><button type="button" class="tag" data-filter="WordPress" aria-pressed="false">WordPress</button></li>
+        <li><button type="button" class="tag" data-filter="Laravel" aria-pressed="false">Laravel</button></li>
+      </ul>
       <p class="visually-hidden" data-filter-status aria-live="polite"></p>
       <p class="grid-note" data-empty hidden>No projects yet.</p>
       <noscript>
         <p class="grid-note">Projects are listed when JavaScript is available.</p>
       </noscript>
-      <ol class="work-list" data-work aria-label="Projects"></ol>
+      <ul class="card-grid" data-grid aria-label="Projects"></ul>
     </section>
   </main>
-
   <footer class="site-footer">
-    <div class="footer-inner">
-      <a class="footer-mail" href="mailto:ce.createe@gmail.com">ce.createe@gmail.com</a>
-      <p class="footer-time"><time data-jakarta-time>00.00.00</time> WIB</p>
-      <div class="footer-groups">
-        <section class="footer-group" id="about">
-          <h2>About</h2>
-          <p data-about>Situs WordPress dan Laravel, dikerjakan bersama Imajiner.</p>
-        </section>
-        <section class="footer-group" id="notes">
-          <h2>Notes</h2>
-          <ul class="footer-links">
-            <li><a href="https://imajiner.id" target="_blank" rel="noopener">Imajiner</a></li>
-          </ul>
-        </section>
-      </div>
-    </div>
+    <a class="footer-mail" data-footer-mail href="mailto:ce.createe@gmail.com">ce.createe@gmail.com</a>
+    <p class="footer-clock"><span class="visually-hidden">Jakarta time, </span><time data-jakarta-time>00:00:00</time> WIB</p>
   </footer>
-
   <script src="scripts/projects.js"></script>
-  <script src="scripts/cursor.js"></script>
   <script src="scripts/main.js"></script>
+  <script src="scripts/cursor.js"></script>
 </body>
 </html>
