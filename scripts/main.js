@@ -51,6 +51,43 @@
       if (meta) meta.setAttribute("content", text(site.description));
     }
     applyContact(site.contact);
+    applyFooterMail(site.contact);
+  }
+
+  function applyFooterMail(contact) {
+    var mail = document.querySelector("[data-footer-mail]");
+    if (!mail || !contact || typeof contact !== "object") return;
+    var href = contact.href ? safeUrl(contact.href) : "";
+    if (!href) return;
+    mail.setAttribute("href", href);
+    if (/^mailto:/i.test(href)) {
+      mail.textContent = href.replace(/^mailto:/i, "").split("?")[0];
+      mail.removeAttribute("target");
+      mail.removeAttribute("rel");
+    } else if (/^https?:\/\//i.test(href)) {
+      mail.setAttribute("target", "_blank");
+      mail.setAttribute("rel", "noopener");
+    }
+  }
+
+  function tickJakarta() {
+    var clock = document.querySelector("[data-jakarta-time]");
+    if (!clock) return;
+    var parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Jakarta",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hourCycle: "h23"
+    }).formatToParts(new Date());
+    function part(type) {
+      for (var i = 0; i < parts.length; i += 1) {
+        if (parts[i].type === type) return parts[i].value;
+      }
+      return "00";
+    }
+    clock.textContent = part("hour") + ":" + part("minute") + ":" + part("second");
+    clock.setAttribute("datetime", new Date().toISOString());
   }
 
   function esc(value) {
@@ -237,4 +274,6 @@
   renderTags();
   renderGrid();
   setFilter("all");
+  tickJakarta();
+  window.setInterval(tickJakarta, 1000);
 })();
