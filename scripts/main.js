@@ -53,5 +53,66 @@
     applyContact(site.contact);
   }
 
+  function esc(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function tagLabels() {
+    var source = Array.isArray(site.tags) ? site.tags : [];
+    var labels = [];
+    source.forEach(function (tag) {
+      var label = String(tag == null ? "" : tag).trim();
+      if (!label || label.toLowerCase() === "all") return;
+      if (labels.indexOf(label) === -1) labels.push(label);
+    });
+    return labels;
+  }
+
+  function renderTags() {
+    var list = document.querySelector("[data-tags]");
+    if (!list) return;
+    var items = ["all"].concat(tagLabels());
+    list.innerHTML = items.map(function (tag) {
+      var isAll = tag === "all";
+      var label = isAll ? "All" : tag;
+      return (
+        "<li><button type=\"button\" class=\"tag\" data-filter=\"" + esc(isAll ? "all" : label) +
+        "\" aria-pressed=\"" + (isAll ? "true" : "false") + "\">" + esc(label) + "</button></li>"
+      );
+    }).join("");
+  }
+
+  function setFilter(tag) {
+    var normalized = tag && tag !== "all" ? tag : "all";
+    document.querySelectorAll("[data-filter]").forEach(function (button) {
+      var on = button.getAttribute("data-filter") === normalized;
+      button.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    var status = document.querySelector("[data-filter-status]");
+    if (status) {
+      status.textContent = normalized === "all"
+        ? "Showing all projects"
+        : "Showing projects tagged " + normalized;
+    }
+  }
+
+  document.addEventListener("click", function (event) {
+    var filter = event.target && event.target.closest ? event.target.closest("[data-filter]") : null;
+    if (!filter) return;
+    var next = filter.getAttribute("data-filter");
+    if (!next || next === "all") {
+      setFilter("all");
+      return;
+    }
+    var active = filter.getAttribute("aria-pressed") === "true";
+    setFilter(active ? "all" : next);
+  });
+
   hydrate();
+  renderTags();
+  setFilter("all");
 })();
