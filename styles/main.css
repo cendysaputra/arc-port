@@ -150,6 +150,40 @@ img {
   line-height: 1.2;
 }
 
+.work {
+  padding: 32px var(--mb-margin) 0;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 20px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 4px 0;
+  color: var(--mb-muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.tag[aria-pressed="true"] {
+  color: var(--mb-ink);
+}
+
+.tag[aria-pressed="true"]::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  background: var(--mb-ink);
+}
+
 @media (hover: hover) and (pointer: fine) {
   a:hover {
     text-decoration-thickness: 2px;

@@ -20,7 +20,17 @@
     </div>
     <p class="site-intro" data-site-intro>Web developer — situs WordPress &amp; Laravel bersama Imajiner.</p>
   </header>
-  <main id="content"></main>
+  <main id="content">
+    <section class="work" id="work" aria-labelledby="work-heading">
+      <h2 id="work-heading" class="visually-hidden">Selected work</h2>
+      <ul class="tag-list" data-tags aria-label="Filter projects by tag">
+        <li><button type="button" class="tag" data-filter="all" aria-pressed="true">All</button></li>
+        <li><button type="button" class="tag" data-filter="WordPress" aria-pressed="false">WordPress</button></li>
+        <li><button type="button" class="tag" data-filter="Laravel" aria-pressed="false">Laravel</button></li>
+      </ul>
+      <p class="visually-hidden" data-filter-status aria-live="polite"></p>
+    </section>
+  </main>
   <script src="scripts/projects.js"></script>
   <script src="scripts/main.js"></script>
   <script src="scripts/cursor.js"></script>
