@@ -207,8 +207,10 @@
         "<a class=\"card-link\" href=\"" + esc(href) + "\"" +
           (outbound ? " target=\"_blank\" rel=\"noopener\"" : "") + ">" +
           "<img class=\"card-thumb\" src=\"" + esc(src) + "\" alt=\"" + esc(alt) + "\" width=\"800\" height=\"700\">" +
-          "<span class=\"card-name\">" + esc(title) + "</span>" +
-          metaHtml +
+          "<span class=\"card-caption\">" +
+            "<span class=\"card-name\">" + esc(title) + "</span>" +
+            metaHtml +
+          "</span>" +
           (outbound ? "<span class=\"visually-hidden\"> (opens in a new tab)</span>" : "") +
         "</a>" +
       "</li>"
