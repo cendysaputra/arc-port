@@ -86,17 +86,138 @@
     }).join("");
   }
 
+  function projectList() {
+    if (Array.isArray(site.projects)) return site.projects;
+    if (Array.isArray(window.PROJECTS)) return window.PROJECTS;
+    return [];
+  }
+
+  function dateParts(value) {
+    var raw = String(value == null ? "" : value).trim();
+    var match = /^(\d{4})[/.](\d{2})[/.](\d{2})$/.exec(raw);
+    if (match) {
+      return {
+        label: match[1] + "/" + match[2] + "/" + match[3],
+        iso: match[1] + "-" + match[2] + "-" + match[3]
+      };
+    }
+    var year = /^(\d{4})$/.exec(raw);
+    if (year) return { label: year[1], iso: year[1] };
+    return { label: raw, iso: "" };
+  }
+
+  function tagList(project) {
+    if (!project || !Array.isArray(project.tags)) return [];
+    return project.tags.map(function (tag) {
+      return String(tag == null ? "" : tag).trim();
+    }).filter(Boolean);
+  }
+
+  function placeholderSvg(title) {
+    var label = esc(title).slice(0, 36);
+    var svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 700\">" +
+      "<rect width=\"800\" height=\"700\" fill=\"#f5f5f5\"/>" +
+      "<rect x=\"48\" y=\"48\" width=\"96\" height=\"96\" fill=\"#090909\"/>" +
+      "<rect x=\"144\" y=\"48\" width=\"96\" height=\"96\" fill=\"#ffffff\"/>" +
+      "<text x=\"48\" y=\"640\" fill=\"#090909\" font-family=\"IBM Plex Sans, sans-serif\" font-size=\"36\">" +
+      label + "</text></svg>";
+    return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+  }
+
+  function thumbSrc(project, title) {
+    var raw = String(project.thumb == null ? "" : project.thumb).trim();
+    if (!raw) return placeholderSvg(title);
+    var safe = safeUrl(raw);
+    return safe ? safe : placeholderSvg(title);
+  }
+
+  function stackLabel(tags) {
+    return tags.filter(function (tag) {
+      return tag.toLowerCase() !== "web dev";
+    }).join(", ");
+  }
+
+  function renderCard(project) {
+    if (!project || typeof project !== "object") return "";
+    var title = text(project.title);
+    if (!title) return "";
+    var href = safeUrl(project.href || "") || "#";
+    var outbound = /^https?:\/\//i.test(href);
+    var dated = dateParts(project.year || project.date);
+    var tags = tagList(project);
+    var alt = text(project.alt) || ("Screenshot of " + title);
+    var src = thumbSrc(project, title);
+    var bits = [];
+    if (dated.label) {
+      bits.push("<time" + (dated.iso ? " datetime=\"" + esc(dated.iso) + "\"" : "") + ">" + esc(dated.label) + "</time>");
+    }
+    var stacks = stackLabel(tags);
+    if (stacks) bits.push(esc(stacks));
+    var metaHtml = bits.length ? "<span class=\"card-meta\">" + bits.join(" · ") + "</span>" : "";
+    return (
+      "<li class=\"card\" data-title=\"" + esc(title) + "\" data-tags=\"" + esc(JSON.stringify(tags)) + "\">" +
+        "<a class=\"card-link\" href=\"" + esc(href) + "\"" +
+          (outbound ? " target=\"_blank\" rel=\"noopener\"" : "") + ">" +
+          "<img class=\"card-thumb\" src=\"" + esc(src) + "\" alt=\"" + esc(alt) + "\" width=\"800\" height=\"700\">" +
+          "<span class=\"card-name\">" + esc(title) + "</span>" +
+          metaHtml +
+          (outbound ? "<span class=\"visually-hidden\"> (opens in a new tab)</span>" : "") +
+        "</a>" +
+      "</li>"
+    );
+  }
+
+  function bindThumbs(grid) {
+    grid.querySelectorAll(".card-thumb").forEach(function (img) {
+      img.addEventListener("error", function () {
+        if (img.getAttribute("data-fallback") === "true") return;
+        img.setAttribute("data-fallback", "true");
+        var card = img.closest(".card");
+        var title = card ? card.getAttribute("data-title") || "Project" : "Project";
+        img.src = placeholderSvg(title);
+      });
+    });
+  }
+
+  function renderGrid() {
+    var grid = document.querySelector("[data-grid]");
+    if (!grid) return;
+    grid.innerHTML = projectList().map(renderCard).filter(Boolean).join("");
+    bindThumbs(grid);
+  }
+
+  function cardTags(card) {
+    try {
+      var parsed = JSON.parse(card.getAttribute("data-tags") || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (err) {
+      return [];
+    }
+  }
+
   function setFilter(tag) {
     var normalized = tag && tag !== "all" ? tag : "all";
-    document.querySelectorAll("[data-filter]").forEach(function (button) {
+    document.querySelectorAll(".tag-list [data-filter]").forEach(function (button) {
       var on = button.getAttribute("data-filter") === normalized;
       button.setAttribute("aria-pressed", on ? "true" : "false");
     });
+    var cards = document.querySelectorAll(".card");
+    var shown = 0;
+    cards.forEach(function (card) {
+      var match = normalized === "all" || cardTags(card).indexOf(normalized) !== -1;
+      card.hidden = !match;
+      if (match) shown += 1;
+    });
+    var empty = document.querySelector("[data-empty]");
+    if (empty) {
+      empty.hidden = shown !== 0;
+      empty.textContent = cards.length === 0 ? "No projects yet." : "No projects for this tag.";
+    }
     var status = document.querySelector("[data-filter-status]");
     if (status) {
       status.textContent = normalized === "all"
-        ? "Showing all projects"
-        : "Showing projects tagged " + normalized;
+        ? "Showing " + shown + " projects"
+        : "Showing " + shown + " projects tagged " + normalized;
     }
   }
 
@@ -114,5 +235,6 @@
 
   hydrate();
   renderTags();
+  renderGrid();
   setFilter("all");
 })();
