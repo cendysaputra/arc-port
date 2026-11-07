@@ -437,9 +437,56 @@ img {
   }
 }
 
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-header {
+    animation: rise-in 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .tag-list {
+    animation: rise-in 560ms cubic-bezier(0.22, 1, 0.36, 1) 70ms both;
+  }
+
+  .card {
+    animation: rise-in 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .card:nth-child(1) { animation-delay: 110ms; }
+  .card:nth-child(2) { animation-delay: 150ms; }
+  .card:nth-child(3) { animation-delay: 190ms; }
+  .card:nth-child(4) { animation-delay: 230ms; }
+  .card:nth-child(5) { animation-delay: 270ms; }
+  .card:nth-child(6) { animation-delay: 310ms; }
+  .card:nth-child(7) { animation-delay: 350ms; }
+  .card:nth-child(8) { animation-delay: 390ms; }
+  .card:nth-child(n + 9) { animation-delay: 410ms; }
+
+  .site-footer {
+    animation: rise-in 560ms cubic-bezier(0.22, 1, 0.36, 1) 360ms both;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .site-header,
+  .tag-list,
+  .card,
+  .site-footer {
+    animation: none;
   }
 
   .card-thumb,
